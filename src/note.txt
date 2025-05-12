@@ -1,0 +1,18 @@
+MERN STACK -  mongodb, express, react, node js
+
+frontend
+reacttailwind daisy ui
+axios
+react-icons
+contexts-api
+
+backend
+mongodb/mongoose  --database
+express /node js  --server
+
+Features of this project
+1. User Authentication (Login, Residter, forgot password, reset password)
+2. ROle Based Access COntrol (RBAC)
+3. File Uploads
+4. email sending
+5. Crud operations
