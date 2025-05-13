@@ -42,7 +42,7 @@ function App() {
 
            {/* 404 route last  */}
           <Route path="*" element={<Error404 />} />
-        </Routes>git 
+        </Routes>
       </Suspense>
     </Router>
   );
