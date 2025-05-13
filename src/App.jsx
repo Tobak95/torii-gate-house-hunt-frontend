@@ -31,7 +31,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/verify-email/:token" element={<VerifyEmail />} />
 
-          {/* Dashboard
+          
 
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<Dashboard />} />
@@ -40,9 +40,9 @@ function App() {
             <Route path="create" element={<CreateProperty />} />
           </Route>
 
-          {/* 404 route last */}
+           {/* 404 route last  */}
           <Route path="*" element={<Error404 />} />
-        </Routes>
+        </Routes>git 
       </Suspense>
     </Router>
   );
