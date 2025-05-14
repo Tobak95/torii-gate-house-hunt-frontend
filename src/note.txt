@@ -16,3 +16,10 @@ Features of this project
 3. File Uploads
 4. email sending
 5. Crud operations
+
+Registration on the frontend
+1. input validation
+2. getb  the input and send to the api as a post reply... (axios)
+3. response - success or error
+a. redirect to the verify page
+errer (display error)
