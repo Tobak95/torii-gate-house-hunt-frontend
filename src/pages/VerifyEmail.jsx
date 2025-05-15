@@ -12,6 +12,8 @@ const VerifyEmail = () => {
       const response = await axiosInstance.post(`/auth/verify-email/${token}`, {
         token,
       });
+      console.log(response);
+
       if (response.status === 200) {
         setStatus("success");
       }
@@ -24,6 +26,7 @@ const VerifyEmail = () => {
   useEffect(() => {
     checkToken();
   }, []);
+
   if (status === "verifying") {
     return <div>Verifying...</div>;
   }
@@ -32,17 +35,19 @@ const VerifyEmail = () => {
       <div>
         <h1>Email Verified Successfully</h1>
         <Link to="/login">
-        <button>Proceed to Login</button>
+          <button>Proceed to Login</button>
         </Link>
       </div>
     );
   }
 
-  return <div>
-    <h1>Verification Failed</h1>
-    <p>{errorMessage}</p>
-    <button>Resend Verification Email</button>
-  </div>;
+  return (
+    <div>
+      <h1>Verification Failed</h1>
+      <p>{errorMessage}</p>
+      <button>Resend Verification Email</button>
+    </div>
+  );
 };
 
 export default VerifyEmail;
