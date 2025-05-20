@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "../assets/blacklogo.png";
+import logo from "../assets/blacklogo.png"
 import { Link, useNavigate } from "react-router-dom";
 import AuthWrapper from "../components/layout/AuthWrapper";
 import { FiEye, FiEyeOff } from "react-icons/fi";
@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../utils/formValidator";
 import { axiosInstance } from "../utils/axiosInstance";
+import { useAppContext } from "../hooks/useAppContext";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -15,6 +16,7 @@ const Login = () => {
   const [role, setRole] = useState("tenant");
   const redirect = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const {login } = useAppContext()
 
   const {
     register,
@@ -24,13 +26,28 @@ const Login = () => {
     resolver: yupResolver(loginSchema),
   });
 
-  const handleLogin = (data) => {
-    // Handle login logic here hadlelogin setisSubmitting = true
+  const handleLogin = async (data) => {
     setIsSubmitting(true);
     try {
       console.log("Login Data:", { ...data, role });
+      // console.log("Login Data:", { ...data, role });
+      const { data: mydata } = await axiosInstance.post("/auth/login", {
+        ...data,
+        role,
+      });
+      console.log(mydata);
+      login(mydata.token, mydata.user);
+      if (mydata.user.role === "tenant") {
+        redirect("/home");
+      } else {
+        redirect("/dashboard");
+      }
+      setErrorMessage("");
     } catch (error) {
       console.log(error);
+      setErrorMessage(error?.response?.data?.message || "Login Failed");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 

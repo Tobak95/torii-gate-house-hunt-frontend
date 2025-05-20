@@ -38,7 +38,7 @@ const Register = () => {
       }
     } catch (error) {
       console.log(error);
-      setErrorMessage(error?.response?.data?.message)
+      setErrorMessage(error?.response?.data?.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -216,8 +216,11 @@ const Register = () => {
           </div>
         )}
         {/* Submit */}
-        <button disabled={isSubmitting} className="btn w-full h-[56px] rounded-lg bg-black text-white block mt-6">
-        {isSubmitting ? 'Registering.....' : 'Register'}
+        <button
+          disabled={isSubmitting}
+          className="btn w-full h-[56px] rounded-lg bg-black text-white block mt-6"
+        >
+          {isSubmitting ? "Registering....." : "Register"}
         </button>
 
         {/* Link to login */}
