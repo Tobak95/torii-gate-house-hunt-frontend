@@ -21,7 +21,7 @@ const Verification = () => {
             Verification required to proceed
           </h1>
           <p className="text-[#666] text-[16px] font-normal">
-            A verification insteuction has been sent to your{" "}
+            A verification token has been sent to your{" "}
             <span className="font-semibold ml-1">{maskEmail(email)}</span>
           </p>
         </div>

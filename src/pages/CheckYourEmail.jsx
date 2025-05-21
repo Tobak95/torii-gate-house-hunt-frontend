@@ -5,15 +5,12 @@ import { FaArrowLeft } from "react-icons/fa";
 import { useState } from "react";
 
 const CheckYourEmail = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const handlePasswordReset = () => {
-    setIsSubmitting(true);
-    try {
-      console.log("Email Verification");
-    } catch (error) {
-      console.log(error);
-    }
-    // setIsSubmitting(false);
+  const email = localStorage.getItem("email");
+  const maskEmail = (email) => {
+    const [username, domain] = email.split("@");
+    const maskedUsername =
+      username.slice(0, 2) + "*".repeat(username.length - 2);
+    return `${maskedUsername}@${domain}`;
   };
   return (
     <AuthWrapper>
@@ -29,22 +26,12 @@ const CheckYourEmail = () => {
           </h1>
           <p className="text-[16px] font-[400] text-[#666666] ">
             Check the email address{" "}
-            <span className="font-[700]">olafarid12@gmail.com</span> for
+            <span className="font-[700]">{maskEmail(email)}</span> for
             instructions to reset your password.
           </p>
 
-          <button
-            className="btn font-[600] text-[16px] text-center text-[#000000] border-[0.8px] border-[#D9D9D9] rounded-[12px] lg:w-[400px] mx-auto w-full  h-[56px] mt-[20px]"
-            onClick={handlePasswordReset}
-            type="button"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? (
-              <span className="loading loading-spinner loading-md text-black"></span>
-            ) : (
-              "Resend mail"
-            )}
-          </button>
+        <Link to="/forgot-password" className="font-semibold mt-2.5 btn btn-active text-black"> Didn’t get a link, resend mail
+        </Link>
         </div>
       </div>
     </AuthWrapper>

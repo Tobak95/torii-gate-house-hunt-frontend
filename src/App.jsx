@@ -44,7 +44,7 @@ function App() {
           <Route path="/verify-email/:token" element={<VerifyEmail />} />
           <Route path="/check-email" element={<CheckYourEmail />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password/:token" element={<ResetPassword/>}/>
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
 
           {/* dashboard routes */}
           <Route element={<ProtectedRoute allowedRoles={["landlord"]} />}>
