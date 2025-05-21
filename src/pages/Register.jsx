@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "../assets/blackLogo.png";
+import logo from "../assets/blacklogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import AuthWrapper from "../components/layout/AuthWrapper";
 import { useForm } from "react-hook-form";
