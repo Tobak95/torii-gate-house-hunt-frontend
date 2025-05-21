@@ -31,7 +31,7 @@ const ResetPassword = () => {
   }
   return (
     <AuthWrapper>
-      <form className='className="w-full lg:w-[505px] p-6"'>
+      <form onSubmit={handleSubmit(handleResetPassword)} className='className="w-full lg:w-[505px] p-6"'>
         <h1 className="text-3xl font-bold">Reset password</h1>
         <p className="text-[16px] font-medium text-[#666]">
           Enter your new password to reset your account password.
