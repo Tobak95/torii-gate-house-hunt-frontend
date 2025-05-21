@@ -21,7 +21,7 @@ const VerifyEmail = () => {
         email,
       });
       if (response.status === 200) {
-        setFeedback("Email sent")
+        setFeedback("Email sent");
       }
     } catch (error) {
       console.log(error);
@@ -43,7 +43,7 @@ const VerifyEmail = () => {
     }
   };
   useEffect(() => {
-    // checkToken();
+    checkToken();
   }, []);
   if (status === "verifying") {
     return (
@@ -82,13 +82,18 @@ const VerifyEmail = () => {
     <div className="flex items-center justify-center h-screen">
       <div className="w-full max-w-[505px] py-[29px] px-[26px] shadow-md text-center">
         <MdCancel size={80} className="text-red-500 mx-auto" />
-        <p className="bg-green-100 text-green-700 pt-1.5 px-3 rounded-lg">{feedback}</p>
+        <p className="bg-green-100 text-green-700 pt-1.5 px-3 rounded-lg">
+          {feedback}
+        </p>
         <h1 className="text-xl lg:text-[30px] font-semibold">
           Email Verification Failed
         </h1>
         <p className="text-[#666] mb-4">{errorMsg}</p>
         <Link to={""}>
-          <button onClick={handleResendEmail} className="w-full font-semibold rounded-xl bg-[#0c0c0c] text-white h-[56px]">
+          <button
+            onClick={handleResendEmail}
+            className="w-full font-semibold rounded-xl bg-[#0c0c0c] text-white h-[56px]"
+          >
             Resend Verification Email
           </button>
         </Link>
