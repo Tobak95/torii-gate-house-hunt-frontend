@@ -4,7 +4,7 @@ import { axiosInstance } from "../utils/axiosInstance";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import group from "../assets/group.png";
+import group from "../assets/Group.png";
 import { BounceLoader } from "react-spinners";
 import { MdCancel } from "react-icons/md";
 
