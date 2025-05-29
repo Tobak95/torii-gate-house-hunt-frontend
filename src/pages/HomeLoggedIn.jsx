@@ -9,7 +9,6 @@ const HomeLoggedIn = () => {
       <Hero />
       <AllProperties />
       <Pagination />
-
       <Footer />
     </div>
   );
