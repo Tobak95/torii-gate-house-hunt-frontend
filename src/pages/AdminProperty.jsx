@@ -29,7 +29,7 @@ const AdminProperty = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       //then we start setting the state according to the backend response
-
+ 
       setProperties(data.properties);
       setTotal(data.total);
       setTotalPages(data.totalPages);
