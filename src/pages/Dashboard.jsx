@@ -3,8 +3,53 @@ import { IoTrendingUp } from "react-icons/io5";
 import { properties } from "../data";
 import AdminPropertyCard from "../components/AdminPropertyCard";
 import AdminPagination from "../components/AdminPagination";
+//import the following components
+import suspenseLoader from "../components/SuspenseLoader";
+import { axiosInstance } from "../utils/axiosInstance";
+import { useState, useEffect } from "react";
+import { useAppContext } from "../hooks/useAppContext";
 
 const Dashboard = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState();
+  const [properties, setProperties] = useState([]);
+  const [total, setTotal] = useState(0);
+  const { token } = useAppContext();
+
+  const fetchProperties = async () => {
+    try {
+      const { data } = await axiosInstance.get(
+        `/property/landlord?page=${page}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      //then we start setting the state according to the backend response
+      setProperties(data.properties);
+      setTotal(data.total);
+      setTotalPages(data.totalPages);
+
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProperties();
+  }, [page]);
+
+  if (isLoading) {
+    return <suspenseLoader />;
+  }
+  if (!isLoading && total === 0) {
+    return (
+      <div>
+        <h1>No properties found</h1>
+      </div>
+    );
+  }
   return (
     <section className="max-w-[1157px]">
       <div className=" pt-4">
@@ -20,7 +65,7 @@ const Dashboard = () => {
       <div className="flex flex-col lg:flex-row items-center justify-between gap-3 mt-4">
         <div className="w-full lg:w-[568px] ">
           <h2 className="pl-3.5 mb-3 font-medium text-[16px] text-[#666]">
-            Total Property
+            {total}
           </h2>
           <div className="w-full bg-white rounded-lg flex items-center h-[80px] pl-3.5">
             <h1 className="font-semibold text-2xl">08</h1>
@@ -58,12 +103,18 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="flex flex-col gap-4">
-        {properties.slice(0, 5).map((property) => {
+        {properties.map((property) => {
           return <AdminPropertyCard key={property._id} {...property} />;
         })}
       </div>
       <div>
-        <AdminPagination />
+        {totalPages > 1 && (
+          <AdminPagination
+            page={page}
+            totalPages={totalPages}
+            setPage={setPage}
+          />
+        )}
       </div>
     </section>
   );
