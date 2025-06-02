@@ -26,3 +26,17 @@ errer (display error)
 
 
 Login page
+
+
+login password and tenant
+{
+    "email": "jilerel228@ofular.com",
+    "password": "password",
+    "role": "landlord"
+}
+
+ "    "fullName": "basongoBILLS",
+    "email": "besog71315@endelite.com",
+    "phoneNumber": "2347044611323",
+    "password": "password",
+    "role": "tenant"

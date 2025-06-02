@@ -33,7 +33,9 @@ function App() {
           {/* public routes */}
           <Route path="/" element={<Home />} />
 
-          <Route element={<ProtectedRoute allowedRoles={["tenant", 'landlord']} />}>
+          <Route
+            element={<ProtectedRoute allowedRoles={["tenant", "landlord"]} />}
+          >
             <Route path="/home" element={<HomeLoggedIn />} />
             <Route path="/property/:propertyId" element={<PropertyDetail />} />
           </Route>

@@ -3,6 +3,7 @@ import SearchForm from "./SearchForm";
 import Nav from "./layout/Nav";
 
 const Hero = () => {
+  
   return (
     <div className="heropage lg:max-h-[720px] h-auto pb-8 ">
       <Nav />
