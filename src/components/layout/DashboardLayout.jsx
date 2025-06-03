@@ -137,7 +137,7 @@ const DashboardLayout = () => {
 
                   <li className="mb-2">
                     <Link to="/home" className="px-4 flex items-center gap-3">
-                      <piUserSwitch size={22} />
+                      <PiUserSwitch size={22} />
                       Switch To Tenant
                     </Link>
                   </li>

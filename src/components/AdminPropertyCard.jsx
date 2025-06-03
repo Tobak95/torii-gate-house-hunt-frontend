@@ -4,10 +4,11 @@ import { MdOutlineBathtub } from "react-icons/md";
 import { LiaBedSolid } from "react-icons/lia";
 import { TbToolsKitchen } from "react-icons/tb";
 import { FaEllipsis } from "react-icons/fa6";
-//import the following components
 import { axiosInstance } from "../utils/axiosInstance";
 import { useAppContext } from "../hooks/useAppContext";
 import { toast } from "react-toastify";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import DeleteModal from "./DeleteeModal";
 
 const AdminPropertyCard = ({
   _id,
@@ -21,6 +22,7 @@ const AdminPropertyCard = ({
 }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [currentStatus, setCurrentStatus] = useState(availability);
+  const [showmodal, setShowModal] = useState(false);
   const { token } = useAppContext();
 
   const toggleDropdown = () => {
@@ -30,21 +32,38 @@ const AdminPropertyCard = ({
   const handleStatusChange = async (newStatus, propertyId) => {
     setCurrentStatus(newStatus);
     setShowDropdown(false);
-
     //trigger api call here
     try {
       const response = await axiosInstance.patch(
-        `/property/landlord/${propertyId}`,
+        ` /property/landlord/${propertyId}`,
+        { availability: newStatus },
         {
-          availability: newStatus,
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
       if (response.status === 200) {
         toast.success("status updated successfully");
       }
     } catch (error) {
-      console.error(error);
+      console.log(error);
+    }
+  };
+  const handleDelete = async (propertyId) => {
+    try {
+      const response = await axiosInstance.delete(
+        `/property/landlord/${propertyId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      if (response.status === 200) {
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
+        toast.success("property deleted successfully");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -55,6 +74,7 @@ const AdminPropertyCard = ({
 
   return (
     <div className="bg-white rounded-lg flex items-center justify-between p-2.5">
+      {/* {showmodal && <DeleteModal setShowModal={setShowModal}/>} */}
       <div className="flex items-center gap-2 relative">
         <img
           src={images[0]}
@@ -88,9 +108,14 @@ const AdminPropertyCard = ({
       </div>
 
       <div className="flex flex-col gap-[22px] items-end relative">
-        <button onClick={toggleDropdown} className="cursor-pointer">
-          <FaEllipsis />
-        </button>
+        <div className="flex items-center gap-2">
+          <button onClick={() => handleDelete(_id)} className="cursor-pointer">
+            <RiDeleteBin6Line />
+          </button>
+          <button onClick={toggleDropdown} className="cursor-pointer">
+            <FaEllipsis />
+          </button>
+        </div>
 
         {showDropdown && (
           <div className="absolute top-8 right-0 bg-white border rounded-md shadow-md z-10">
