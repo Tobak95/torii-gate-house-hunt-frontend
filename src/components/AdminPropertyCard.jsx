@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import DeleteModal from "./DeleteeModal";
 
+
 const AdminPropertyCard = ({
   _id,
   images,

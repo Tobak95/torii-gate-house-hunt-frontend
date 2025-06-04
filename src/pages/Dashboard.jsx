@@ -4,13 +4,17 @@ import { properties } from "../data";
 import AdminPropertyCard from "../components/AdminPropertyCard";
 import AdminPagination from "../components/AdminPagination";
 //import the following components
-import suspenseLoader from "../components/SuspenseLoader";
+import SuspenseLoader from "../components/SuspenseLoader";
 import { axiosInstance } from "../utils/axiosInstance";
 import { useState, useEffect } from "react";
 import { useAppContext } from "../hooks/useAppContext";
 import EmptyLandlord from "../components/EmptyLandlord";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
+  const redirect = useNavigate();
+  // This component is used to display the admin dashboard for properties
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState();
@@ -20,18 +24,24 @@ const Dashboard = () => {
 
   const fetchProperties = async () => {
     try {
-      const { data } = await axiosInstance.get(
+      const response = await axiosInstance.get(
         `/property/landlord?page=${page}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
       //then we start setting the state according to the backend response
+      const { data } = response;
       setProperties(data.properties);
-      setTotal(data.total);
+      setPage(data.currentPage);
       setTotalPages(data.totalPages);
-
+      setTotal(data.total);
       setIsLoading(false);
+
+      if (response.status === 401) {
+        toast.warning("session expired, please login in again");
+        redirect("/login");
+      }
     } catch (error) {
       console.error(error);
     }
@@ -42,14 +52,10 @@ const Dashboard = () => {
   }, [page]);
 
   if (isLoading) {
-    return <suspenseLoader />;
+    return <SuspenseLoader />;
   }
-  if (!isLoading && true) {
-    return (
-      
-        <EmptyLandlord />
-      
-    );
+  if (!isLoading && total === 0) {
+    return <EmptyLandlord />;
   }
   return (
     <section className="max-w-[1157px]">

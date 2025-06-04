@@ -16,7 +16,7 @@ const Experience = () => {
           </h1>
           <p className="font-[500] text-[12px] lg:text-[16px] text-[#666666] my-[20px]">
             At Torii Gate, we believe finding your perfect home should be easy
-            and exciting. Founded to transform the homebuying experience, we
+            and exciting. Founded to transform the home buying experience, we
             simplify the property search process with advanced technology and a
             team of experts. Our mission is to provide unparalleled convenience
             and personalized service, making every step towards your dream home

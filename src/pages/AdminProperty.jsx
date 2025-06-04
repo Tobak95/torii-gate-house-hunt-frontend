@@ -5,13 +5,19 @@ import AdminPropertyCard from "../components/AdminPropertyCard";
 import { Link } from "react-router-dom";
 import { MdOutlineAddHome } from "react-icons/md";
 import AdminPagination from "../components/AdminPagination";
-
+import { ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import suspenseLoader from "../components/SuspenseLoader";
 import { axiosInstance } from "../utils/axiosInstance";
 import { useState, useEffect } from "react";
 import { useAppContext } from "../hooks/useAppContext";
 import SuspenseLoader from "../components/SuspenseLoader";
+
+
 const AdminProperty = () => {
+  const redirect = useNavigate();
+
+  
   // This component is used to display the admin dashboard for properties
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -24,12 +30,12 @@ const AdminProperty = () => {
 
   const fetchProperties = async () => {
     try {
-      const { data } = await axiosInstance.get(
+      const response = await axiosInstance.get(
         `/property/landlord?page-${page}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       //then we start setting the state according to the backend response
- 
+      const { data } = response;
       setProperties(data.properties);
       setTotal(data.total);
       setTotalPages(data.totalPages);
@@ -38,8 +44,13 @@ const AdminProperty = () => {
       console.log(data);
 
       setIsLoading(false);
+      if (response.status === 401) {
+        toast.warning("session expired, please login in again");
+        redirect("/login");
+      }
     } catch (error) {
       console.error(error);
+     
     }
   };
   useEffect(() => {
@@ -47,7 +58,7 @@ const AdminProperty = () => {
   }, [page]);
 
   if (isLoading) {
-    return <SuspenseLoader/>
+    return <SuspenseLoader />;
   }
   if (!isLoading && total === 0) {
     return (
